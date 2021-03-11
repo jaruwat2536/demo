@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Demo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="jquery-3.6.0.js"></script>
+        <style>
+            body {
+                margin: 0;
+            }
+            .icon {
+                width: 25px;
+            }
+            .option {
+                margin: auto;
+                right: 4px;
+                position: absolute;
+                top: 6px;
+            }
+            .navbar {
+                background-color: #1877f2;
+                height: 3rem;
+                position: relative;
+                color: white;
+            }
+            .cart {
+                cursor: pointer;
+                position: absolute;
+                right: 4rem;
+                top: 1rem;
+            }
+            .logo {
+                position: absolute;
+                width: 9rem;
+                height: 2rem;
+                margin: 8px;
+            }
+            .product {
+                height: 10rem;
+                background-color: aqua;
+                margin: 10px;
+                border-radius: 80px;
+            }
+            .product .product-img {
+                border-radius: 25px;
+                width: 9rem;
+                height: 9rem;
+                margin: 5px 5rem;
+                float: left;
+            }
+            .product .product-img img {
+                border-radius: 15px;
+            }
+            .product .product-name {
+                height: 3rem;
+                width: 16rem;
+                margin: 53px;
+                float: left;
+            }
+            .product .product-quantity {
+                height: 3rem;
+                width: 5rem;
+                margin: 53px;
+                float: left;
+            }
+            .product-img img {
+                width: 10rem;
+            }
+        </style>
+        <script>
+            $(document).ready((function () {
+                $('.product').clone().appendTo('body');
+            }));
+        </script>
+    </head>
+    <body>
+        <div class="navbar">
+            <!--<img class="icon logo" src="/img/logo.jfif" alt="svg" />-->
+            <div class="cart" th:text="${total}"></div>
+            <img class="icon option" src="/img/align-justify-solid.svg" alt="svg" />
+        </div>
+        <div class="product">
+            <div class="product-img"><img src="/img/product/p1.jpg"/></div>
+            <div class="product-name"><h3>test</h3></div>
+            <div class="product-quantity"><h3>1</h3></div>
+        </div>
+    </body>
+</html>
