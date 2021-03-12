@@ -10,6 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <link href="sb-admin-2.min.css" rel="stylesheet">
         <script src="jquery-3.6.0.js"></script>
         <style>
             body {
@@ -37,59 +38,158 @@ and open the template in the editor.
                 top: 1rem;
             }
             .logo {
+                cursor: pointer;
                 position: absolute;
                 width: 9rem;
                 height: 2rem;
                 margin: 8px;
             }
-            .product {
-                height: 10rem;
-                background-color: aqua;
-                margin: 10px;
-                border-radius: 80px;
+            .row{
+                color: black;
+                background-color: whitesmoke;
+                border: solid darkgray 1px;
+                border-radius: 5px;
+                margin: 1rem;
             }
-            .product .product-img {
-                border-radius: 25px;
-                width: 9rem;
-                height: 9rem;
-                margin: 5px 5rem;
-                float: left;
-            }
-            .product .product-img img {
+            .row img {
                 border-radius: 15px;
+                width: 7rem;
             }
-            .product .product-name {
-                height: 3rem;
-                width: 16rem;
-                margin: 53px;
-                float: left;
+            .pd {
+                cursor: pointer;
+                background-color: lightgray;
+                margin: 10px;
+                padding: 10px;
+                border-radius: 1rem;
             }
-            .product .product-quantity {
-                height: 3rem;
-                width: 5rem;
-                margin: 53px;
-                float: left;
-            }
-            .product-img img {
-                width: 10rem;
+            .form-control {
+                color: black;
             }
         </style>
         <script>
             $(document).ready((function () {
-                $('.product').clone().appendTo('body');
+                $('.icon.logo').click(function () {
+                    $('.btn.btn-danger,.btn.btn-success').off();
+                    $('.cart-detail').hide();
+                    $('.list-product').show();
+                    $('.container.order').remove();
+                });
+
+                $('#cart-total').click(function () {
+                    $('.cart-detail').show();
+                    $('.list-product').hide();
+                    $('.container.order').remove();
+
+                });
+                $('.pd').click(function () {
+                    $('.cart-detail').hide();
+                    $('.list-product').hide();
+                    createOrder($(this).find('img').prop('src'), $(this).find('h2').text());
+//                    alert($(this).find('img').prop('src'));
+//                    alert($(this).find('h2').text());
+                });
             }));
+
+            function createEl(pic, name, quantity) {
+                let el = '<div class="container">\n\
+                            <div class="row align-items-center">\n\
+                                <div class="col-lg-4"><img src="' + pic + '"/></div>\n\
+                                <div class="col-lg-4"><h3>' + name + '</h3></div>\n\
+                                <div class="col-lg-4"><h3>' + quantity + '</h3></div>\n\
+                            </div>\n\
+                        </div>';
+                $('body').append(el);
+            }
+
+            function createOrder(src, name) {
+                $('.container.order').remove();
+                let el = '<div class="container order">\n\
+                            <div class="row align-items-center" style="text-align: center;">\n\
+                                <div class="col-lg-12"><img src="' + src + '" style="width: 20rem;"/></div>\n\
+                            </div>\n\
+                            <div class="row align-items-center">\n\
+                                <div class="col-lg-4"><h3 style="float: right;"><b>Product name: </b></h3></div>\n\
+                                <div class="col-lg-4"><h4>' + name + '</h4></div>\n\
+                            </div>\n\
+                            <div class="row align-items-center">\n\
+                                <div class="col-lg-4"><h3 style="float: right;"><b>Product color: </b></h3></div>\n\
+                                <div class="col-lg-4">\n\
+                                    <select id="sel-color" class="form-control" size="1">\n\
+                                        <option value="Red">Red</option>\n\
+                                        <option value="Blue">Blue</option>\n\
+                                        <option value="Green">Green</option>\n\
+                                    </select>\n\
+                                </div>\n\
+                            </div>\n\
+                            <div class="row align-items-center">\n\
+                                <div class="col-lg-4"><h3 style="float: right;"><b>Product Size: </b></h3></div>\n\
+                                <div class="col-lg-4">\n\
+                                    <select id="sel-size" class="form-control" size="1">\n\
+                                        <option value="S">S</option>\n\
+                                        <option value="M">M</option>\n\
+                                        <option value="L">L</option>\n\
+                                    </select>\n\
+                                </div>\n\
+                            </div>\n\
+                            <div class="row align-items-center">\n\
+                                <div class="col-lg-4"><h3 style="float: right;"><b>Quantity: </b></h3></div>\n\
+                                <div class="col-lg-4">\n\
+                                    <input id="input-quantity" class="form-control" type="number" value="1" min="0" max="1000" step="1"/>\n\
+                                </div>\n\
+                            </div>\n\
+                            \n\<div class="row align-items-center">\n\
+                                <div class="col-lg-12" style="text-align:center;">\n\
+                                    <button class="btn btn-danger" style="margin: auto;">Back</button>\n\
+                                    <button class="btn btn-success style="margin: auto;>Confirm</button>\n\
+                                </div>\n\
+                            </div>\n\
+                        </div>';
+                $('body').append(el);
+                $('.btn.btn-danger').click(function () {
+                    $('.icon.logo').click();
+                });
+                $('.btn.btn-success').click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/order',
+                        data: {
+                            imgSrc: src,
+                            name: name,
+                            color: $('#sel-color').val(),
+                            size: $('#sel-size').val(),
+                            quantity: $('#input-quantity').val()
+                        },
+                        success: function (msg) {
+                            window.location.href = "/";
+                        }, error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                });
+            }
         </script>
     </head>
     <body>
         <div class="navbar">
-            <!--<img class="icon logo" src="/img/logo.jfif" alt="svg" />-->
-            <div class="cart" th:text="${total}"></div>
+            <img class="icon logo" src="/img/logo.jfif" alt="svg" />
+            <div id="cart-total" class="cart" th:text="${total}"></div>
             <img class="icon option" src="/img/align-justify-solid.svg" alt="svg" />
         </div>
-        <div class="product">
-            <div class="product-img"><img src="/img/product/p1.jpg"/></div>
-            <div class="product-name"><h3>test</h3></div>
-            <div class="product-quantity"><h3>1</h3></div>
+        <div class="container list-product">
+            <div class="row justify-content-md-center">
+                <div class="col-lg-4 align-items-center pd" th:each="product: ${listProduct}">
+                    <div class="col-lg-12" style="text-align: center;"><img th:src="${product.imgSrc}" style="width: 15rem;" /></div>
+                    <div class="col-lg-12"><h2 th:text="${product.name}" style="text-align: center"></h2></div>
+                </div>
+            </div>
+        </div>
+        <div class="container cart-detail" th:each="cart: ${cart}" style="display: none;">
+            <div class="row align-items-center">
+                <div class="col-lg-3"><img th:src="${cart.imgSrc}"/></div>
+                <div class="col-lg-3"><h3 th:text="${cart.name}"></h3></div>
+                <div class="col-lg-3"><h3 th:text="${cart.color}"></h3></div>
+                <div class="col-lg-3"><h3 th:text="${cart.quantity}"></h3></div>
+            </div>
         </div>
     </body>
 </html>

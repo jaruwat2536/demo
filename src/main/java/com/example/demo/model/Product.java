@@ -16,7 +16,7 @@ import lombok.Data;
 @Data
 public class Product {
 
-    private Integer id;
+    private String imgSrc;
     private String name;
     private Color color;
     private Size size;

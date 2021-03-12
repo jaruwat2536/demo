@@ -24,9 +24,9 @@ public class DemoController {
         return bookingService.getInstanceCart();
     }
 
-    @PostMapping("/product")
-    public Product insertProduct(@RequestParam String id, @RequestParam String name, @RequestParam String color, @RequestParam String size, @RequestParam String quantity) {
-        bookingService.Booking(id, name, color, size, quantity);
-        return new Product();
+    @PostMapping("/order")
+    public Cart insertProduct(@RequestParam String imgSrc, @RequestParam String name, @RequestParam String color, @RequestParam String size, @RequestParam String quantity) {
+        bookingService.Booking(imgSrc, name, color, size, quantity);
+        return bookingService.getInstanceCart();
     }
 }

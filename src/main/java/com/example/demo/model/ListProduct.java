@@ -5,14 +5,20 @@
  */
 package com.example.demo.model;
 
+import lombok.Data;
+
 /**
  *
  * @author Jaruwatj
  */
-public class IceCream extends Product {
+@Data
+public class ListProduct {
 
-    public IceCream() {
-        this.setId(new Integer(1));
+    private String imgSrc;
+    private String name;
+
+    public ListProduct(String imgSrc, String name) {
+        this.imgSrc = imgSrc;
+        this.name = name;
     }
-
 }

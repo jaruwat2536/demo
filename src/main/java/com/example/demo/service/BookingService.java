@@ -6,7 +6,8 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Cart;
-import java.util.Map;
+import com.example.demo.model.ListProduct;
+import java.util.List;
 
 /**
  *
@@ -16,6 +17,8 @@ public interface BookingService {
 
     public Cart getInstanceCart();
 
-    public void Booking(String id, String name, String color, String size, String quantity);
+    public void Booking(String imgSrc, String name, String color, String size, String quantity);
+
+    public List<ListProduct> getListProduct();
 
 }
