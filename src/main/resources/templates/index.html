@@ -65,6 +65,18 @@ and open the template in the editor.
             .form-control {
                 color: black;
             }
+            .xs-header {
+                display: none;
+            }
+            @media only screen and (max-width: 1000px){
+                .header {
+                    visibility: hidden;
+                }
+                .xs-header {
+                    visibility: visible;
+                    display: block;
+                }
+            }
         </style>
         <script>
             $(document).ready((function () {
@@ -134,7 +146,7 @@ and open the template in the editor.
                             <div class="row align-items-center">\n\
                                 <div class="col-lg-4"><h3 style="float: right;"><b>Quantity: </b></h3></div>\n\
                                 <div class="col-lg-4">\n\
-                                    <input id="input-quantity" class="form-control" type="number" value="1" min="0" max="1000" step="1"/>\n\
+                                    <input id="input-quantity" class="form-control" type="number" value="1" min="1" max="1000" step="1"/>\n\
                                 </div>\n\
                             </div>\n\
                             \n\<div class="row align-items-center">\n\
@@ -183,12 +195,22 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
+        <div class="container cart-detail header" style="display: none;">
+            <div class="row align-items-center">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-2">PRODUCT NAME</div>
+                <div class="col-lg-2">COLOR</div>
+                <div class="col-lg-2">SIZE</div>
+                <div class="col-lg-2">QUANTITY</div>
+            </div>
+        </div>
         <div class="container cart-detail" th:each="cart: ${cart}" style="display: none;">
             <div class="row align-items-center">
-                <div class="col-lg-3"><img th:src="${cart.imgSrc}"/></div>
-                <div class="col-lg-3"><h3 th:text="${cart.name}"></h3></div>
-                <div class="col-lg-3"><h3 th:text="${cart.color}"></h3></div>
-                <div class="col-lg-3"><h3 th:text="${cart.quantity}"></h3></div>
+                <div class="col-lg-2"><img th:src="${cart.imgSrc}"/></div>
+                <div class="col-lg-2"><h3 class="xs-header"><b>Product name: </b></h3><h3 th:text="${cart.name}"></h3></div>
+                <div class="col-lg-2"><h3 class="xs-header"><b>Color: </b></h3><h3 th:text="${cart.color}"></h3></div>
+                <div class="col-lg-2"><h3 class="xs-header"><b>Size: </b></h3><h3 th:text="${cart.size}"></h3></div>
+                <div class="col-lg-2"><h3 class="xs-header"><b>Quantity</b></h3><h3 th:text="${cart.quantity}"></h3></div>
             </div>
         </div>
     </body>
